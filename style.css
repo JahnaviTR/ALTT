@@ -24,12 +24,15 @@ body {
 .content {
     text-align: center;
 
-    margin-top: 320px;   /* 🔥 POSITION CONTROL */
+    position: absolute;
+    top: 52%;             /* 🔥 PERFECT ALIGNMENT CONTROL */
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 /* TITLE */
 .title {
-    font-size: 85px;
+    font-size: 95px;
     font-weight: 900;
 
     background: linear-gradient(to bottom, #e8ecf3, #aab4c8);
@@ -40,7 +43,7 @@ body {
     margin: 0;
 	
     /* 🔥 ADD THIS LINE */
-    text-shadow: 0px 5px 20px rgba(255,255,255,0.3)
+    text-shadow: 0px 8px 25px rgba(255,255,255,0.4)
 
 }
 
@@ -50,26 +53,26 @@ body {
     letter-spacing: 4px;
 
     color: #c8d4ea;
-    margin-top: 10px;
+    margin-top: 5px;
 }
 
 /* TAGLINE */
 .tagline {
-    margin-top: 25px;
+    margin-top: 20px;
 
-    font-size: 15px;
+    font-size: 14px;
     font-style: italic;
 
-    color: #dbe6f5;
+    color: #e0e8f8;
 
-    padding: 10px 30px;
+    padding: 8px 25px;
 
     border-radius: 20px;
 
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(6px);
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(8px);
 
-    border: 1px solid rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.15);
 
     display: inline-block;
 }

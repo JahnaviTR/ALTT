@@ -261,19 +261,25 @@ body {
    ================================ */
 
 .altt-horizontal-container {
+  position: fixed;              /* ✅ stick to screen */
+  left: 0;
+  bottom: 40px;                 /* ✅ move to bottom */
+
   width: 100%;
   display: flex;
   justify-content: center;
 
-  margin-top: 60px;   /* space from tagline */
-  margin-bottom: 50px;
+  z-index: 20;                  /* ✅ keep above background */
+
+  padding: 0 20px;              /* ✅ spacing from edges */
 }
+
+
 
 .altt-horizontal-box {
   width: 85%;
   max-width: 1100px;
-  height: 180px;   /* horizontal strip height */
-
+  height: 140px;   /* ✅ slightly slimmer for bottom layout *
   display: flex;
   justify-content: center;
   align-items: center;

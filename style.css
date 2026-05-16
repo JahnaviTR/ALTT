@@ -1,15 +1,34 @@
 /* RESET */
 
+
 body {
     margin: 0;
     height: 100vh;
 
     background: url("background.png") no-repeat center center fixed;
-    background-size: cove
-	
-    image-rendering: auto;
-
+    background-size: 120% auto;
 }
+
+body::after {
+    content: "";                 /* Required to make it work */
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    pointer-events: none;        /* So it doesn't block clicks */
+
+    background: radial-gradient(
+        circle at center,
+        rgba(0, 0, 0, 0) 55%,     /* center clear */
+        rgba(0, 0, 0, 0.25) 75%,  /* soft dark */
+        rgba(0, 0, 0, 0.45) 100%  /* darker edges */
+    );
+}
+
 
 /* DARK OVERLAY (to match contrast) */
 .overlay {

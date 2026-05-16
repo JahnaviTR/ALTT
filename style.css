@@ -263,7 +263,7 @@ body {
 .altt-horizontal-container {
   position: fixed;              /* ✅ stick to screen */
   left: 0;
-  bottom: 40px;                 /* ✅ move to bottom */
+  bottom: 30px;                 /* ✅ move to bottom */
 
   width: 100%;
   display: flex;
@@ -279,16 +279,16 @@ body {
 .altt-horizontal-box {
   width: 85%;
   max-width: 1100px;
-  height: 140px;   /* ✅ slightly slimmer for bottom layout *
+  height: 140px;
+
   display: flex;
   justify-content: center;
   align-items: center;
 
   border-radius: 24px;
 
-  /* subtle glass look */
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-
-  border: 1px solid rgba(255,255,255,0.12);
+  /* ✅ REMOVE GLASS LOOK */
+  background: transparent;
+  backdrop-filter: none;
+  border: none;
 }

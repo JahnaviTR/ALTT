@@ -78,3 +78,193 @@ body {
 
     display: inline-block;
 }
+
+/* ================================
+   ALTT Bottom Option Cards Section
+   ================================ */
+
+.altt-options {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: clamp(18px, 4.5vh, 44px);
+  z-index: 20;
+
+  /* Ensures cards don't touch screen edges */
+  padding: 0 clamp(14px, 3vw, 32px);
+
+  /* No overlap with browser UI safe area */
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+
+  pointer-events: none; /* enable click only on inner wrapper */
+}
+
+.altt-options__wrap {
+  pointer-events: auto;
+
+  /* Desktop layout: side-by-side */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(14px, 2.2vw, 22px);
+
+  /* Center with max width */
+  max-width: 1050px;
+  margin: 0 auto;
+
+  /* Prevent overlap with hero text area (keeps cards visually in bottom zone) */
+  align-items: stretch;
+}
+
+/* Card base */
+.option-card {
+  position: relative;
+  overflow: hidden;
+
+  border-radius: 20px;
+  padding: clamp(16px, 2vw, 22px) clamp(16px, 2.2vw, 26px);
+  min-height: 140px;
+
+  /* Glass + tint */
+  background: linear-gradient(
+    135deg,
+    rgba(130, 190, 255, 0.14),
+    rgba(30, 80, 170, 0.10)
+  );
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  /* Thin glowing border (blue-white gradient) */
+  border: 1px solid rgba(190, 230, 255, 0.22);
+
+  /* Depth */
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.10);
+
+  cursor: pointer;
+  text-align: left;
+
+  transition: transform 0.3s ease, filter 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+/* Liquid reflection shine layer */
+.option-card__shine {
+  position: absolute;
+  inset: -40% -30%;
+  background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.22), rgba(255,255,255,0) 55%),
+              linear-gradient(120deg, rgba(255,255,255,0.18), rgba(255,255,255,0) 35%);
+  transform: rotate(-8deg);
+  opacity: 0.55;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+/* Subtle moving highlight edge */
+.option-card::before {
+  content: "";
+  position: absolute;
+  top: -60%;
+  left: -30%;
+  width: 120%;
+  height: 120%;
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.14) 40%,
+    rgba(255,255,255,0) 75%
+  );
+  transform: rotate(18deg);
+  opacity: 0.22;
+  pointer-events: none;
+}
+
+/* Typography */
+.option-card__title {
+  margin: 0 0 8px 0;
+  font-size: clamp(18px, 1.4vw, 22px);
+  font-weight: 800;
+  color: rgba(235, 248, 255, 0.95);
+  letter-spacing: 0.2px;
+}
+
+.option-card__desc {
+  margin: 0;
+  font-size: clamp(13px, 1vw, 14.5px);
+  line-height: 1.55;
+  color: rgba(230, 238, 245, 0.78);
+}
+
+/* Hover effects (MANDATORY) */
+.option-card:hover {
+  transform: scale(1.04);
+  filter: brightness(1.08);
+
+  /* Neon aura */
+  box-shadow:
+    0 0 22px rgba(90, 180, 255, 0.55),
+    0 18px 40px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+
+  border-color: rgba(200, 240, 255, 0.35);
+}
+
+.option-card:hover .option-card__shine {
+  opacity: 0.82;
+  transform: rotate(-8deg) translateY(-6px);
+}
+
+/* Selected state */
+.option-card.is-selected {
+  filter: brightness(1.12);
+
+  border-color: rgba(210, 245, 255, 0.55);
+
+  box-shadow:
+    0 0 32px rgba(80, 190, 255, 0.70),
+    0 18px 44px rgba(0, 0, 0, 0.48),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+/* Selected indicator tag */
+.option-card__selectedTag {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+
+  padding: 6px 10px;
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+
+  color: rgba(235, 250, 255, 0.95);
+  background: rgba(80, 185, 255, 0.16);
+  border: 1px solid rgba(190, 235, 255, 0.22);
+
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
+}
+
+.option-card.is-selected .option-card__selectedTag {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Responsive: stack vertically on smaller screens */
+@media (max-width: 900px) {
+  .altt-options {
+    bottom: clamp(12px, 3vh, 26px);
+  }
+
+  .altt-options__wrap {
+    grid-template-columns: 1fr;
+    max-width: 680px;
+  }
+
+  .option-card {
+    min-height: 130px;
+  }
+}

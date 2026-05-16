@@ -118,34 +118,42 @@ body {
 /* Card base */
 .option-card {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;   /* ✅ push everything to top */
+
   overflow: hidden;
 
   border-radius: 20px;
-  padding: clamp(16px, 2vw, 22px) clamp(16px, 2.2vw, 26px);
-  min-height: 140px;
 
-  /* Glass + tint */
+  /* ✅ TOP-HEAVY PADDING (important for layout) */
+  padding: 28px 24px 26px 24px;
+
+  min-height: 160px;
+
   background: linear-gradient(
     135deg,
     rgba(130, 190, 255, 0.14),
     rgba(30, 80, 170, 0.10)
   );
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
 
-  /* Thin glowing border (blue-white gradient) */
+  backdrop-filter: blur(14px);
+
   border: 1px solid rgba(190, 230, 255, 0.22);
 
-  /* Depth */
   box-shadow:
     0 10px 30px rgba(0, 0, 0, 0.35),
     inset 0 1px 0 rgba(255, 255, 255, 0.10);
 
   cursor: pointer;
-  text-align: left;
+
+  /* ❌ REMOVE this → (no longer needed) */
+  /* text-align: left; */
 
   transition: transform 0.3s ease, filter 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
+
+
 
 /* Liquid reflection shine layer */
 .option-card__shine {
@@ -180,18 +188,33 @@ body {
 
 /* Typography */
 .option-card__title {
-  margin: 0 0 8px 0;
-  font-size: clamp(18px, 1.4vw, 22px);
-  font-weight: 800;
-  color: rgba(235, 248, 255, 0.95);
-  letter-spacing: 0.2px;
+  margin: 0;
+  margin-bottom: 16px;
+
+  font-size: clamp(19px, 1.5vw, 23px);
+  font-weight: 900;
+
+  color: rgba(235, 248, 255, 0.96);
+  letter-spacing: 0.3px;
+
+  /* ✅ TOP CENTER ALIGNMENT */
+  text-align: center;
 }
+
 
 .option-card__desc {
   margin: 0;
-  font-size: clamp(13px, 1vw, 14.5px);
-  line-height: 1.55;
-  color: rgba(230, 238, 245, 0.78);
+
+  font-size: clamp(13.5px, 1.05vw, 15px);
+  line-height: 1.65;
+
+  color: rgba(230, 238, 245, 0.82);
+
+  /* ✅ Align for readability */
+  text-align: left;
+
+  /* ✅ side padding for better reading */
+  padding: 0 4px;
 }
 
 /* Hover effects (MANDATORY) */

@@ -12,54 +12,39 @@
     <!-- FULL BACKGROUND ONLY -->
     <div class="background"></div>
 	
-	<!-- Bottom Option Cards (ALTT Options) -->
-<section class="altt-options" aria-label="Select testing mode">
+	<!-- ALTT Option Cards -->
+<section class="altt-options">
   <div class="altt-options__wrap">
 
-    <button class="option-card is-selected" type="button" data-option="print" aria-pressed="true">
-      <div class="option-card__shine" aria-hidden="true"></div>
-      <div class="option-card__content">
-        <h3 class="option-card__title">Print Testing</h3>
-        <p class="option-card__desc">
-          “Print Testing ensures that every entered value is accurately displayed, correctly aligned, and properly positioned within the form at the line level.”
-        </p>
-      </div>
-      <div class="option-card__selectedTag" aria-hidden="true">Selected</div>
-    </button>
+    <div class="option-card" onclick="goToPrint()">
+      <div class="option-card__shine"></div>
+      <h3 class="option-card__title">Print Testing</h3>
+      <p class="option-card__desc">
+        “Print Testing ensures that every entered value is accurately displayed, correctly aligned, and properly positioned within the form at the line level.”
+      </p>
+    </div>
 
-    <button class="option-card" type="button" data-option="compare" aria-pressed="false">
-      <div class="option-card__shine" aria-hidden="true"></div>
-      <div class="option-card__content">
-        <h3 class="option-card__title">Compare Testing</h3>
-        <p class="option-card__desc">
-          “Compare Testing ensures that every value on the form exactly matches the XML output, validating accurate line-level mapping and consistency.”
-        </p>
-      </div>
-      <div class="option-card__selectedTag" aria-hidden="true">Selected</div>
-    </button>
+    <div class="option-card" onclick="goToCompare()">
+      <div class="option-card__shine"></div>
+      <h3 class="option-card__title">Compare Testing</h3>
+      <p class="option-card__desc">
+        “Compare Testing ensures that every value on the form exactly matches the XML output, validating accurate line-level mapping and consistency.”
+      </p>
+    </div>
 
   </div>
 </section>
 
 <script>
-  // Minimal selection logic: only one card selected at a time
-  const cards = document.querySelectorAll('.option-card');
+function goToPrint() {
+  window.location.href = "print.html";
+}
 
-  function selectCard(target) {
-    cards.forEach(card => {
-      const isActive = card === target;
-      card.classList.toggle('is-selected', isActive);
-      card.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-    });
-
-    // Optional: capture selected value for later navigation
-    // console.log("Selected:", target.dataset.option);
-  }
-
-  cards.forEach(card => {
-    card.addEventListener('click', () => selectCard(card));
-  });
+function goToCompare() {
+  window.location.href = "compare.html";
+}
 </script>
+``
 
 </body>
 

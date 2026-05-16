@@ -1,14 +1,13 @@
 /* RESET */
+
 body {
     margin: 0;
-    padding: 0;
     height: 100vh;
-    font-family: 'Segoe UI', sans-serif;
 
-    /* ✅ FULL BACKGROUND IMAGE */
     background: url("background.png") no-repeat center center;
     background-size: cover;
 }
+
 
 /* DARK OVERLAY (to match contrast) */
 .overlay {

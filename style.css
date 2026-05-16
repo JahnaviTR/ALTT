@@ -118,6 +118,9 @@ body {
 /* Card base */
 .option-card {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   overflow: hidden;
 
   border-radius: 20px;
@@ -181,12 +184,23 @@ body {
 }
 
 /* Typography */
+
+.option-card__header {
+  text-align: center;
+  margin-bottom: 16px;
+}
 .option-card__title {
   margin: 0 0 8px 0;
   font-size: clamp(18px, 1.4vw, 22px);
   font-weight: 800;
   color: rgba(235, 248, 255, 0.95);
   letter-spacing: 0.2px;
+}
+
+/* BODY (Description Section) */
+.option-card__body {
+  text-align: center;
+  padding: 0 4px;
 }
 
 .option-card__desc {

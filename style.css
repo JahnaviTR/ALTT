@@ -262,7 +262,7 @@ body {
 .altt-horizontal-container {
   position: fixed;              /* ✅ stick to screen */
   left: 0;
-  bottom: 80px;                 /* ✅ move to bottom */
+  bottom: 65px;                 /* ✅ move to bottom */
 
   width: 100%;
   display: flex;

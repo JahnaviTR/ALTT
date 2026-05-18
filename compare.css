@@ -75,7 +75,7 @@ body{
   
   position: relative;   /* ✅ REQUIRED */
 
-  background: rgba(18, 22, 34, 0.10);
+  background: rgba(18, 22, 34, 0.03);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
 

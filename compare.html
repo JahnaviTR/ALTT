@@ -6,10 +6,34 @@
   <link rel="stylesheet" href="compare.css" />
 </head>
 <body>
-
   <div class="altt-second-bg"></div>
   <div class="compare-overlay"></div>
 
+  <!-- ✅ CONTENT LAYER -->
+  <div class="compare-content">
+    <h1>QA Compare Screen</h1>
+
+    <div class="file-summary">
+      <p>PDF Selected: <span id="pdfName"></span></p>
+      <p>XML Selected: <span id="xmlName"></span></p>
+    </div>
+
+    <button onclick="startComparison()">Start Comparison</button>
+  </div>
+
+  <script>
+    // Load selected file names from previous screen
+    document.getElementById("pdfName").textContent =
+      sessionStorage.getItem("pdfFilename") || "Not selected";
+
+    document.getElementById("xmlName").textContent =
+      sessionStorage.getItem("xmlFilename") || "Not selected";
+
+    function startComparison() {
+      alert("Comparison logic will run here");
+    }
+  </script>
 </body>
+``
 </html>
 ``

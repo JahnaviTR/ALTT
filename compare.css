@@ -41,4 +41,22 @@ body {
   z-index: -1;
   background: rgba(0, 8, 25, 0.35);
 }
-``
+
+.compare-content {
+  position: relative;
+  z-index: 1;
+  color: white;
+  text-align: center;
+  padding-top: 100px;
+}
+
+.file-summary {
+  margin: 20px 0;
+  font-size: 18px;
+}
+
+button {
+  padding: 12px 24px;
+  font-size: 16px;
+  cursor: pointer;
+}

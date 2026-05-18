@@ -171,40 +171,27 @@ body{
 .dropzone {
   position: relative;
 
-  background: rgba(255, 255, 255, 0.04);  /* ✅ VERY LIGHT glass tone */
+  background: none !important;   /* ✅ REMOVE ANY COLOR */
+  backdrop-filter: none !important;  /* ✅ REMOVE BLUR */
   
-  backdrop-filter: blur(10px);            /* ✅ GLASS EFFECT */
-  -webkit-backdrop-filter: blur(10px);
-
   border-radius: 16px;
-  border: 1.5px dashed rgba(255, 255, 255, 0.35);
+  border: 1.5px dashed rgba(255, 255, 255, 0.5);
 
   padding: 18px;
   cursor: pointer;
 
+  box-shadow: none;
+
   transition: all 0.25s ease;
 }
-.dropzone::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 16px;
 
-  background: radial-gradient(
-    circle at top left,
-    rgba(255,255,255,0.12),
-    transparent 70%
-  );
-
-  pointer-events: none;
-}
 
 .dropzone:hover {
-  border-color: rgba(102, 227, 255, 0.9);
+  border-color: rgba(102, 227, 255, 1);
 
   box-shadow:
-    0 0 20px rgba(102, 227, 255, 0.15),
-    0 0 40px rgba(102, 227, 255, 0.08);
+    0 0 10px rgba(102, 227, 255, 0.25),
+    0 0 20px rgba(102, 227, 255, 0.15);
 
   transform: translateY(-2px);
 }
@@ -249,7 +236,7 @@ body{
   place-items: center;
   border-radius: 14px;
   background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.4);
   color: rgba(255,255,255,0.78);
 }
 

@@ -1,180 +1,166 @@
-/* =========================================
-   BACKGROUND: Layered CSS implementation
-   Based on your prompt:
-   - gradient base
-   - radial glow
-   - particles
-   - mesh lines
-   - vignette
-========================================= */
+/* =====================================================
+   HIGH-FIDELITY BACKGROUND (COMPARE.CSS)
+===================================================== */
+
+body {
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+  background: #050B1D;
+}
 
 .altt-second-bg {
   position: fixed;
   inset: 0;
-  z-index: -2;
-  overflow: hidden;
+  z-index: -1;
 
-  /* Layer 1 + 2: Base gradient + radial glow */
+  /* Layer 1: Base Gradient */
   background:
-    radial-gradient(circle at 50% 42%,
-      rgba(46, 125, 216, 0.26) 0%,
-      rgba(46, 125, 216, 0.10) 22%,
-      rgba(0, 0, 0, 0) 52%),
-    radial-gradient(circle at center,
-      #0B3B7A 0%,
-      #071B3A 40%,
-      #050B1D 100%);
+    radial-gradient(circle at 50% 45%, #0B3B7A 0%, #071B3A 45%, #050B1D 100%);
 }
 
-/* Layer 3: Particles (bokeh-like dots) */
+
+/* =====================================================
+   LAYER 2 + 3: PARTICLES (HIGH DENSITY + VARIATION)
+===================================================== */
 .altt-second-bg::before {
   content: "";
   position: absolute;
-  inset: -10%;
-  z-index: -1;
+  inset: 0;
 
-  /* Tiny dot field */
   background-image:
-    radial-gradient(rgba(255,255,255,0.20) 1px, transparent 1.2px);
-  background-size: 5px 5px;
+    radial-gradient(rgba(255,255,255,0.20) 1px, transparent 1px),
+    radial-gradient(rgba(255,255,255,0.15) 1.5px, transparent 1.5px),
+    radial-gradient(rgba(255,255,255,0.10) 2px, transparent 2px),
+    radial-gradient(rgba(255,255,255,0.08) 3px, transparent 3px),
 
-  /* Density fades outward (center-focused) */
-  opacity: 0.18;
-  filter: blur(0.15px);
-  mask-image: radial-gradient(circle at 50% 45%,
-    rgba(0,0,0,1) 0%,
-    rgba(0,0,0,1) 45%,
-    rgba(0,0,0,0) 78%);
-  pointer-events: none;
+    radial-gradient(rgba(255,255,255,0.12) 1px, transparent 1px),
+    radial-gradient(rgba(255,255,255,0.08) 1.5px, transparent 1.5px);
+
+  background-size:
+    18px 18px,
+    28px 28px,
+    60px 60px,
+    90px 90px,
+    40px 40px,
+    70px 70px;
+
+  background-position:
+    0 0,
+    15px 20px,
+    40px 60px,
+    80px 100px,
+    20px 10px,
+    65px 35px;
+
+  opacity: 0.35;
+
+  /* Central density mask */
+  mask-image: radial-gradient(circle at 50% 45%, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 80%);
 }
 
-/* Layer 4 + 5: Network mesh + vignette */
+
+/* =====================================================
+   LAYER 4: DEPTH / BLUR PARTICLES
+===================================================== */
 .altt-second-bg::after {
   content: "";
   position: absolute;
   inset: 0;
+
+  background-image:
+    radial-gradient(rgba(255,255,255,0.18) 2px, transparent 2px),
+    radial-gradient(rgba(255,255,255,0.10) 3px, transparent 3px);
+
+  background-size:
+    120px 120px,
+    180px 180px;
+
+  background-position:
+    50px 40px,
+    100px 120px;
+
+  filter: blur(2px);
+  opacity: 0.25;
+
+  mask-image: radial-gradient(circle at 50% 45%, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 70%);
+}
+
+
+/* =====================================================
+   SEPARATE LAYERS: GLOW + MESH + VIGNETTE
+===================================================== */
+
+/* Glow Layer */
+.altt-second-bg .glow {
+  position: absolute;
+  inset: -20%;
+
+  background: radial-gradient(
+    circle at 50% 45%,
+    rgba(46,125,216,0.35) 0%,
+    rgba(46,125,216,0.15) 25%,
+    rgba(0,0,0,0) 70%
+  );
+
   pointer-events: none;
+}
+
+
+/* Network Mesh (LEFT) */
+.altt-second-bg .mesh-left {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 25%;
 
   background:
-    /* Mesh lines (subtle) */
-    linear-gradient(115deg, rgba(120,180,255,0.10) 1px, transparent 1px),
-    linear-gradient(65deg,  rgba(120,180,255,0.07) 1px, transparent 1px),
+    linear-gradient(to right, rgba(46,125,216,0.2), transparent),
+    repeating-linear-gradient(
+      60deg,
+      rgba(255,255,255,0.06) 0px,
+      rgba(255,255,255,0.06) 1px,
+      transparent 1px,
+      transparent 18px
+    );
 
-    /* Vignette overlay */
-    radial-gradient(circle at center,
-      rgba(0,0,0,0) 45%,
-      rgba(0,0,0,0.35) 78%,
-      rgba(0,0,0,0.62) 100%);
-
-  background-size: 140px 140px, 180px 180px, cover;
-  opacity: 0.22;
+  opacity: 0.25;
 }
 
 
-/* =========================================
-   FOREGROUND OVERLAY (Readability)
-========================================= */
+/* Network Mesh (RIGHT) */
+.altt-second-bg .mesh-right {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 25%;
 
-.compare-overlay {
-  min-height: 100vh;
-  display: grid;
-  place-items: center;
+  background:
+    linear-gradient(to left, rgba(46,125,216,0.2), transparent),
+    repeating-linear-gradient(
+      -60deg,
+      rgba(255,255,255,0.06) 0px,
+      rgba(255,255,255,0.06) 1px,
+      transparent 1px,
+      transparent 18px
+    );
 
-  /* Light dark overlay for readability */
-  background: rgba(0, 8, 22, 0.28);
+  opacity: 0.25;
 }
 
-/* Container */
-.upload-shell {
-  width: min(1100px, 92vw);
-  padding: clamp(18px, 3vw, 34px);
-}
 
-/* Two upload boxes: desktop side-by-side */
-.upload-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(14px, 2.2vw, 22px);
-  align-items: stretch;
-}
+/* Vignette Layer */
+.altt-second-bg .vignette {
+  position: absolute;
+  inset: 0;
 
-/* Responsive stacking */
-@media (max-width: 900px) {
-  .upload-grid {
-    grid-template-columns: 1fr;
-  }
-}
+  background: radial-gradient(
+    circle at center,
+    rgba(0,0,0,0) 50%,
+    rgba(0,0,0,0.65) 100%
+  );
 
-/* Reuse .option-card styling from style.css, add structural rules */
-.upload-card.option-card {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  max-width: 560px;
-  min-width: 0;
-  margin: 0 auto;
-}
-
-/* Card inner layout */
-.upload-card__content {
-  width: 100%;
-  display: grid;
-  gap: 10px;
-  text-align: center;
-}
-
-/* Drag state highlight (does not replace your hover glow) */
-.upload-card.is-dragover {
-  outline: 2px solid rgba(120, 210, 255, 0.55);
-  outline-offset: 5px;
-}
-
-/* Selected file label */
-.file-pill {
-  margin-top: 6px;
-  padding: 10px 12px;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.14);
-  color: rgba(235, 248, 255, 0.92);
-  font-size: 13px;
-  backdrop-filter: blur(10px);
-
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.file-pill.has-file {
-  border-color: rgba(170, 240, 255, 0.32);
-  box-shadow: 0 0 18px rgba(90, 180, 255, 0.22);
-}
-
-/* Actions */
-.actions {
-  display: flex;
-  justify-content: center;
-  margin-top: 18px;
-}
-
-.continue-btn {
-  padding: 12px 22px;
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.18);
-  background: rgba(255,255,255,0.08);
-  color: rgba(235, 248, 255, 0.96);
-  cursor: pointer;
-  backdrop-filter: blur(10px);
-  transition: 0.25s ease;
-}
-
-.continue-btn:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
-
-.continue-btn:not(:disabled):hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 18px rgba(90, 180, 255, 0.35);
-  border-color: rgba(200, 240, 255, 0.30);
+  pointer-events: none;
 }

@@ -181,35 +181,26 @@ startBtn.addEventListener("click", () => {
     return;
   }
 
-  // ✅ STEP 3 — LOADER STARTS HERE
-  startBtn.disabled = true;
-  startBtn.innerHTML = "Processing <span class='loader'></span>";
-
-  setMessage("Processing files… Please wait.", "success");
-
-  // ✅ Simulate backend processing (later replaced with API)
-  setTimeout(() => {
-
-    // ✅ STEP 4 — NAVIGATION
-    window.location.href = "results.html";
-
-  }, 2000);  // simulate delay
-});
-
-  // Placeholder for next step processing / API integration
-  setMessage("Files validated. Starting comparison… (placeholder)", "success");
-
-  // Example payload stub (future API)
+  // ✅ Optional: payload stub (keep inside click handler)
   const payload = {
     pdf: { name: state.pdfFile.name, size: state.pdfFile.size, type: state.pdfFile.type },
     xml: { name: state.xmlFile.name, size: state.xmlFile.size, type: state.xmlFile.type }
   };
-
-  // You can replace this with: upload to backend, call AI chain, navigate to results screen
   console.log("Start Comparison payload (placeholder):", payload);
 
-  // If you want to simulate navigation later:
-  // window.location.href = "results.html";
+  // ✅ STEP 3 — LOADER
+  const originalBtnHtml = startBtn.innerHTML;
+  startBtn.disabled = true;
+  startBtn.innerHTML = "Processing <span class='loader'></span>";
+  setMessage("Processing files… Please wait.", "success");
+
+  // ✅ STEP 4 — NAVIGATION
+  setTimeout(() => {
+    window.location.href = "results.html";
+    // If you ever want to restore (only if you don't navigate):
+    // startBtn.innerHTML = originalBtnHtml;
+    // updateButtonState();
+  }, 2000);
 });
 
 // ---------- Optional: dev-only reset helper (keep for future flows) ----------

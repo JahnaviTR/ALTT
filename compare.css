@@ -61,17 +61,24 @@ body{
 }
 
 /* Layout shell */
-.shell{
+.shell {
   min-height: 100vh;
-  display: grid;
-  place-items: center;
-  padding: 28px 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 60px;  /* ✅ This creates equal space all sides */
 }
 
 /* Main card */
 
 .card {
-  width: min(980px, 100%);
+  
+  width: 100%;
+  max-width: 1400px;  /* ✅ Increase size of box */
+
+  margin: auto;       /* ✅ Center alignment */
   
   position: relative;   /* ✅ REQUIRED */
 

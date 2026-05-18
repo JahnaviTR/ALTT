@@ -69,22 +69,11 @@ body{
 }
 
 /* Main card */
+
 .card {
-  width: min(980px, 100%);
-  
-  position: relative;   /* ✅ REQUIRED */
-
-  background: rgba(18, 22, 34, 0.35);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(14px);
-
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 22px;
-
-  box-shadow: 0 20px 55px rgba(0, 0, 0, 0.45);
-
-  padding: 26px;
+  background: transparent;
 }
+
 
 .card::before {
   content: "";

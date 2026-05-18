@@ -1,31 +1,96 @@
-/* =========================
-   Exact background replica
-   ========================= */
-.compare-body {
-  margin: 0;
-  height: 100vh;
-  font-family: 'Segoe UI', sans-serif;
+/* =========================================
+   BACKGROUND: Layered CSS implementation
+   Based on your prompt:
+   - gradient base
+   - radial glow
+   - particles
+   - mesh lines
+   - vignette
+========================================= */
 
-  /* EXACT replica: use provided image */
-  background: url("image.png") no-repeat center center;
-  background-size: cover;
+.altt-second-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+
+  /* Layer 1 + 2: Base gradient + radial glow */
+  background:
+    radial-gradient(circle at 50% 42%,
+      rgba(46, 125, 216, 0.26) 0%,
+      rgba(46, 125, 216, 0.10) 22%,
+      rgba(0, 0, 0, 0) 52%),
+    radial-gradient(circle at center,
+      #0B3B7A 0%,
+      #071B3A 40%,
+      #050B1D 100%);
 }
 
-/* Readability overlay (subtle) */
+/* Layer 3: Particles (bokeh-like dots) */
+.altt-second-bg::before {
+  content: "";
+  position: absolute;
+  inset: -10%;
+  z-index: -1;
+
+  /* Tiny dot field */
+  background-image:
+    radial-gradient(rgba(255,255,255,0.20) 1px, transparent 1.2px);
+  background-size: 5px 5px;
+
+  /* Density fades outward (center-focused) */
+  opacity: 0.18;
+  filter: blur(0.15px);
+  mask-image: radial-gradient(circle at 50% 45%,
+    rgba(0,0,0,1) 0%,
+    rgba(0,0,0,1) 45%,
+    rgba(0,0,0,0) 78%);
+  pointer-events: none;
+}
+
+/* Layer 4 + 5: Network mesh + vignette */
+.altt-second-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  background:
+    /* Mesh lines (subtle) */
+    linear-gradient(115deg, rgba(120,180,255,0.10) 1px, transparent 1px),
+    linear-gradient(65deg,  rgba(120,180,255,0.07) 1px, transparent 1px),
+
+    /* Vignette overlay */
+    radial-gradient(circle at center,
+      rgba(0,0,0,0) 45%,
+      rgba(0,0,0,0.35) 78%,
+      rgba(0,0,0,0.62) 100%);
+
+  background-size: 140px 140px, 180px 180px, cover;
+  opacity: 0.22;
+}
+
+
+/* =========================================
+   FOREGROUND OVERLAY (Readability)
+========================================= */
+
 .compare-overlay {
   min-height: 100vh;
   display: grid;
   place-items: center;
-  background: rgba(0, 8, 22, 0.35);
+
+  /* Light dark overlay for readability */
+  background: rgba(0, 8, 22, 0.28);
 }
 
-/* Layout shell */
+/* Container */
 .upload-shell {
   width: min(1100px, 92vw);
   padding: clamp(18px, 3vw, 34px);
 }
 
-/* Two cards grid */
+/* Two upload boxes: desktop side-by-side */
 .upload-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -33,28 +98,24 @@
   align-items: stretch;
 }
 
-/* Responsive: stack on smaller screens */
+/* Responsive stacking */
 @media (max-width: 900px) {
   .upload-grid {
     grid-template-columns: 1fr;
   }
 }
 
-/* =========================
-   Reuse first-screen option-card
-   but make it perfect for uploads
-   ========================= */
+/* Reuse .option-card styling from style.css, add structural rules */
 .upload-card.option-card {
-  /* Keep option-card visuals from style.css,
-     only add structural safety here */
   position: relative;
   overflow: hidden;
   width: 100%;
-  max-width: 520px;
+  max-width: 560px;
   min-width: 0;
   margin: 0 auto;
 }
 
+/* Card inner layout */
 .upload-card__content {
   width: 100%;
   display: grid;
@@ -62,13 +123,13 @@
   text-align: center;
 }
 
-/* Drag state */
+/* Drag state highlight (does not replace your hover glow) */
 .upload-card.is-dragover {
   outline: 2px solid rgba(120, 210, 255, 0.55);
-  outline-offset: 4px;
+  outline-offset: 5px;
 }
 
-/* File pill */
+/* Selected file label */
 .file-pill {
   margin-top: 6px;
   padding: 10px 12px;
@@ -78,15 +139,15 @@
   color: rgba(235, 248, 255, 0.92);
   font-size: 13px;
   backdrop-filter: blur(10px);
+
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-/* Selected state */
 .file-pill.has-file {
-  border-color: rgba(170, 240, 255, 0.35);
-  box-shadow: 0 0 18px rgba(90, 180, 255, 0.25);
+  border-color: rgba(170, 240, 255, 0.32);
+  box-shadow: 0 0 18px rgba(90, 180, 255, 0.22);
 }
 
 /* Actions */

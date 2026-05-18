@@ -68,7 +68,7 @@ body{
   align-items: center;
   justify-content: center;
 
-  padding: 60px;  /* ✅ This creates equal space all sides */
+  padding: 80px;  /* ✅ This creates equal space all sides */
 }
 
 /* Main card */

@@ -1,166 +1,28 @@
 /* =====================================================
-   HIGH-FIDELITY BACKGROUND (COMPARE.CSS)
+   COMPARE.CSS (IMAGE-BASED BACKGROUND - EXACT MATCH)
 ===================================================== */
 
 body {
   margin: 0;
   height: 100vh;
   overflow: hidden;
-  background: #050B1D;
 }
 
+/* BACKGROUND LAYER */
 .altt-second-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+
+  background: url("compare.png") no-repeat center center;
+  background-size: cover;
+}
+
+/* LIGHT OVERLAY FOR READABILITY */
+.compare-overlay {
   position: fixed;
   inset: 0;
   z-index: -1;
 
-  /* Layer 1: Base Gradient */
-  background:
-    radial-gradient(circle at 50% 45%, #0B3B7A 0%, #071B3A 45%, #050B1D 100%);
-}
-
-
-/* =====================================================
-   LAYER 2 + 3: PARTICLES (HIGH DENSITY + VARIATION)
-===================================================== */
-.altt-second-bg::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-
-  background-image:
-    radial-gradient(rgba(255,255,255,0.20) 1px, transparent 1px),
-    radial-gradient(rgba(255,255,255,0.15) 1.5px, transparent 1.5px),
-    radial-gradient(rgba(255,255,255,0.10) 2px, transparent 2px),
-    radial-gradient(rgba(255,255,255,0.08) 3px, transparent 3px),
-
-    radial-gradient(rgba(255,255,255,0.12) 1px, transparent 1px),
-    radial-gradient(rgba(255,255,255,0.08) 1.5px, transparent 1.5px);
-
-  background-size:
-    18px 18px,
-    28px 28px,
-    60px 60px,
-    90px 90px,
-    40px 40px,
-    70px 70px;
-
-  background-position:
-    0 0,
-    15px 20px,
-    40px 60px,
-    80px 100px,
-    20px 10px,
-    65px 35px;
-
-  opacity: 0.35;
-
-  /* Central density mask */
-  mask-image: radial-gradient(circle at 50% 45%, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 80%);
-}
-
-
-/* =====================================================
-   LAYER 4: DEPTH / BLUR PARTICLES
-===================================================== */
-.altt-second-bg::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-
-  background-image:
-    radial-gradient(rgba(255,255,255,0.18) 2px, transparent 2px),
-    radial-gradient(rgba(255,255,255,0.10) 3px, transparent 3px);
-
-  background-size:
-    120px 120px,
-    180px 180px;
-
-  background-position:
-    50px 40px,
-    100px 120px;
-
-  filter: blur(2px);
-  opacity: 0.25;
-
-  mask-image: radial-gradient(circle at 50% 45%, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 70%);
-}
-
-
-/* =====================================================
-   SEPARATE LAYERS: GLOW + MESH + VIGNETTE
-===================================================== */
-
-/* Glow Layer */
-.altt-second-bg .glow {
-  position: absolute;
-  inset: -20%;
-
-  background: radial-gradient(
-    circle at 50% 45%,
-    rgba(46,125,216,0.35) 0%,
-    rgba(46,125,216,0.15) 25%,
-    rgba(0,0,0,0) 70%
-  );
-
-  pointer-events: none;
-}
-
-
-/* Network Mesh (LEFT) */
-.altt-second-bg .mesh-left {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 25%;
-
-  background:
-    linear-gradient(to right, rgba(46,125,216,0.2), transparent),
-    repeating-linear-gradient(
-      60deg,
-      rgba(255,255,255,0.06) 0px,
-      rgba(255,255,255,0.06) 1px,
-      transparent 1px,
-      transparent 18px
-    );
-
-  opacity: 0.25;
-}
-
-
-/* Network Mesh (RIGHT) */
-.altt-second-bg .mesh-right {
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: 25%;
-
-  background:
-    linear-gradient(to left, rgba(46,125,216,0.2), transparent),
-    repeating-linear-gradient(
-      -60deg,
-      rgba(255,255,255,0.06) 0px,
-      rgba(255,255,255,0.06) 1px,
-      transparent 1px,
-      transparent 18px
-    );
-
-  opacity: 0.25;
-}
-
-
-/* Vignette Layer */
-.altt-second-bg .vignette {
-  position: absolute;
-  inset: 0;
-
-  background: radial-gradient(
-    circle at center,
-    rgba(0,0,0,0) 50%,
-    rgba(0,0,0,0.65) 100%
-  );
-
-  pointer-events: none;
+  background: rgba(0, 8, 25, 0.35);
 }

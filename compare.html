@@ -1,31 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>ALTT - Upload</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>ALTT - Upload</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
+  <!-- Background layer only (no text/images here) -->
+  <div class="background" aria-hidden="true"></div>
 
-<!-- Background -->
-<div class="background"></div>
+  <!-- Centered stage -->
+  <main class="upload-stage">
+    <section class="upload-grid" aria-label="File upload area">
+      
+      <!-- PDF Upload Card -->
+      <div
+        class="upload-card"
+        id="pdfCard"
+        role="button"
+        tabindex="0"
+        aria-label="Upload PDF file"
+        data-kind="pdf"
+      >
+        <div class="upload-card__shine" aria-hidden="true"></div>
+        <div class="upload-card__content">
+          <div class="upload-title">PDF Upload</div>
+          <div class="upload-hint">Select or drag a PDF file here</div>
+          <div class="upload-filename" id="pdfName">No file selected</div>
+        </div>
+        <input type="file" id="pdfInput" accept=".pdf,application/pdf" hidden />
+      </div>
 
-<!-- Upload Section -->
-<div class="upload-container">
+      <!-- XML Upload Card -->
+      <div
+        class="upload-card"
+        id="xmlCard"
+        role="button"
+        tabindex="0"
+        aria-label="Upload XML file"
+        data-kind="xml"
+      >
+        <div class="upload-card__shine" aria-hidden="true"></div>
+        <div class="upload-card__content">
+          <div class="upload-title">XML Upload</div>
+          <div class="upload-hint">Select or drag an XML file here</div>
+          <div class="upload-filename" id="xmlName">No file selected</div>
+        </div>
+        <input type="file" id="xmlInput" accept=".xml,text/xml,application/xml" hidden />
+      </div>
 
-    <div id="uploadBox" class="upload-box">
-        <p>Upload File<br>
-        <span>Select any file for QA validation</span></p>
-        <input type="file" id="fileInput" hidden>
-    </div>
+    </section>
+  </main>
 
-    <!-- Forms Display -->
-    <div id="formsContainer" class="forms-container"></div>
-
-</div>
-
-<script src="compare.js"></script>
-
+  <script src="compare.js"></script>
 </body>
 </html>
-``

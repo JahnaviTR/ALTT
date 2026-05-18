@@ -1,36 +1,94 @@
-const pdfCard = document.getElementById("pdfCard");
-const xmlCard = document.getElementById("xmlCard");
+/**
+ * Compare Screen Logic (PDF + XML)
+ * - Accepts any file type (no restrictions yet)
+ * - Supports click-to-upload and drag-and-drop
+ * - Stores file references for future API integration
+ * - Validates both files before proceeding
+ * - Updates UI instantly with file name + success styling
+ *
+ * Future extensibility hooks:
+ * - strict type validation (.pdf / .xml)
+ * - multi-file upload
+ * - auto-detect forms
+ * - navigate to results screen
+ * - integrate AI comparison engine via API
+ */
+
+// State (kept minimal + extensible)
+const state = {
+  pdfFile: null,
+  xmlFile: null
+};
+
+// Elements
+const pdfZone = document.getElementById("pdfZone");
+const xmlZone = document.getElementById("xmlZone");
+
 const pdfInput = document.getElementById("pdfInput");
 const xmlInput = document.getElementById("xmlInput");
-const pdfPill  = document.getElementById("pdfPill");
-const xmlPill  = document.getElementById("xmlPill");
-const continueBtn = document.getElementById("continueBtn");
 
+const pdfSecondary = document.getElementById("pdfSecondary");
+const xmlSecondary = document.getElementById("xmlSecondary");
+
+const pdfStatus = document.getElementById("pdfStatus");
+const xmlStatus = document.getElementById("xmlStatus");
+
+const startBtn = document.getElementById("startBtn");
+const messageEl = document.getElementById("message");
+
+// ---------- Helpers ----------
+function prettySize(bytes) {
+  if (!Number.isFinite(bytes)) return "";
+  const units = ["B", "KB", "MB", "GB"];
+  let idx = 0;
+  let v = bytes;
+  while (v >= 1024 && idx < units.length - 1) {
+    v /= 1024;
+    idx++;
+  }
+  return `${v.toFixed(idx === 0 ? 0 : 1)} ${units[idx]}`;
+}
+
+function setMessage(text, kind = "") {
+  messageEl.textContent = text || "";
+  messageEl.classList.remove("error", "success");
+  if (kind) messageEl.classList.add(kind);
+}
+
+function setZoneSuccess(zoneEl, statusEl, secondaryEl, file) {
+  zoneEl.classList.add("success");
+  const name = file?.name || "Selected file";
+  const size = file?.size ? ` • ${prettySize(file.size)}` : "";
+  secondaryEl.textContent = name;
+  statusEl.textContent = `Uploaded: ${name}${size}`;
+}
+
+function clearZone(zoneEl, statusEl, secondaryEl) {
+  zoneEl.classList.remove("success");
+  secondaryEl.textContent = "No file selected";
+  statusEl.textContent = "";
+}
+
+function assignFile(kind, file) {
+  if (kind === "pdf") {
+    state.pdfFile = file;
+    setZoneSuccess(pdfZone, pdfStatus, pdfSecondary, file);
+  } else if (kind === "xml") {
+    state.xmlFile = file;
+    setZoneSuccess(xmlZone, xmlStatus, xmlSecondary, file);
+  }
+}
+
+// ---------- Click + keyboard triggers ----------
 function openPicker(inputEl) {
-  inputEl.value = ""; // allow reselect same file
+  // Reset value so selecting same file again still triggers change event
+  inputEl.value = "";
   inputEl.click();
 }
 
-function setPill(pillEl, file) {
-  if (!file) {
-    pillEl.textContent = "No file selected";
-    pillEl.classList.remove("has-file");
-    return;
-  }
-  pillEl.textContent = file.name;
-  pillEl.classList.add("has-file");
-}
-
-function updateContinue() {
-  const hasPdf = pdfInput.files && pdfInput.files.length > 0;
-  const hasXml = xmlInput.files && xmlInput.files.length > 0;
-  continueBtn.disabled = !(hasPdf && hasXml);
-}
-
-// Click + keyboard open
-function bindCard(cardEl, inputEl) {
-  cardEl.addEventListener("click", () => openPicker(inputEl));
-  cardEl.addEventListener("keydown", (e) => {
+function wireClickAndKeyboard(zoneEl, inputEl) {
+  zoneEl.addEventListener("click", () => openPicker(inputEl));
+  zoneEl.addEventListener("keydown", (e) => {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       openPicker(inputEl);
@@ -38,67 +96,102 @@ function bindCard(cardEl, inputEl) {
   });
 }
 
-bindCard(pdfCard, pdfInput);
-bindCard(xmlCard, xmlInput);
+wireClickAndKeyboard(pdfZone, pdfInput);
+wireClickAndKeyboard(xmlZone, xmlInput);
 
-// Change handlers
-pdfInput.addEventListener("change", () => {
-  setPill(pdfPill, pdfInput.files[0]);
-  updateContinue();
+// ---------- Input change handlers ----------
+pdfInput.addEventListener("change", (e) => {
+  const file = e.target.files && e.target.files[0] ? e.target.files[0] : null;
+  if (file) assignFile("pdf", file);
 });
 
-xmlInput.addEventListener("change", () => {
-  setPill(xmlPill, xmlInput.files[0]);
-  updateContinue();
+xmlInput.addEventListener("change", (e) => {
+  const file = e.target.files && e.target.files[0] ? e.target.files[0] : null;
+  if (file) assignFile("xml", file);
 });
 
-// Drag & drop (bonus)
-function bindDragDrop(cardEl, inputEl, pillEl, allowedExt) {
-  cardEl.addEventListener("dragover", (e) => {
-    e.preventDefault();
-    cardEl.classList.add("is-dragover");
-  });
+// ---------- Drag & drop ----------
+function preventDefaults(e) {
+  e.preventDefault();
+  e.stopPropagation();
+}
 
-  cardEl.addEventListener("dragleave", () => {
-    cardEl.classList.remove("is-dragover");
-  });
+function wireDragDrop(zoneEl, kind) {
+  const onDragEnter = (e) => {
+    preventDefaults(e);
+    zoneEl.classList.add("dragOver");
+  };
 
-  cardEl.addEventListener("drop", (e) => {
-    e.preventDefault();
-    cardEl.classList.remove("is-dragover");
+  const onDragOver = (e) => {
+    preventDefaults(e);
+    zoneEl.classList.add("dragOver");
+  };
 
-    const file = e.dataTransfer.files && e.dataTransfer.files[0];
-    if (!file) return;
+  const onDragLeave = (e) => {
+    preventDefaults(e);
+    // only remove if leaving the zone fully
+    if (e.target === zoneEl) zoneEl.classList.remove("dragOver");
+  };
 
-    const ok = allowedExt.some(ext => file.name.toLowerCase().endsWith(ext));
-    if (!ok) {
-      alert(`Please drop a valid ${allowedExt.join(" / ")} file.`);
-      return;
-    }
+  const onDrop = (e) => {
+    preventDefaults(e);
+    zoneEl.classList.remove("dragOver");
 
-    // Set file into input (works in modern browsers)
-    const dt = new DataTransfer();
-    dt.items.add(file);
-    inputEl.files = dt.files;
+    const dt = e.dataTransfer;
+    const file = dt && dt.files && dt.files[0] ? dt.files[0] : null;
+    if (file) assignFile(kind, file);
+  };
 
-    setPill(pillEl, file);
-    updateContinue();
+  ["dragenter", "dragover"].forEach(evt => zoneEl.addEventListener(evt, onDragEnter));
+  ["dragleave"].forEach(evt => zoneEl.addEventListener(evt, onDragLeave));
+  zoneEl.addEventListener("drop", onDrop);
+
+  // Safety: prevent browser from opening file if dropped outside
+  ["dragenter", "dragover", "dragleave", "drop"].forEach(evt => {
+    document.body.addEventListener(evt, preventDefaults, false);
   });
 }
 
-bindDragDrop(pdfCard, pdfInput, pdfPill, [".pdf"]);
-bindDragDrop(xmlCard, xmlInput, xmlPill, [".xml"]);
+wireDragDrop(pdfZone, "pdf");
+wireDragDrop(xmlZone, "xml");
 
-// Continue action (wire to next step)
-continueBtn.addEventListener("click", () => {
-  const pdfFile = pdfInput.files[0];
-  const xmlFile = xmlInput.files[0];
+// ---------- Start button validation ----------
+startBtn.addEventListener("click", () => {
+  setMessage("");
 
-  // Example: store names for next screen
-  sessionStorage.setItem("pdfFilename", pdfFile?.name || "");
-  sessionStorage.setItem("xmlFilename", xmlFile?.name || "");
+  const missing = [];
+  if (!state.pdfFile) missing.push("PDF");
+  if (!state.xmlFile) missing.push("XML");
 
-  // TODO: navigate to next screen
-  alert("PDF and XML selected. Next screen can start comparison.");
+  if (missing.length) {
+    setMessage(`Please upload the missing file(s): ${missing.join(" and ")}.`, "error");
+    // Optional: guide focus to first missing zone
+    if (!state.pdfFile) pdfZone.focus();
+    else xmlZone.focus();
+    return;
+  }
+
+  // Placeholder for next step processing / API integration
+  setMessage("Files validated. Starting comparison… (placeholder)", "success");
+
+  // Example payload stub (future API)
+  const payload = {
+    pdf: { name: state.pdfFile.name, size: state.pdfFile.size, type: state.pdfFile.type },
+    xml: { name: state.xmlFile.name, size: state.xmlFile.size, type: state.xmlFile.type }
+  };
+
+  // You can replace this with: upload to backend, call AI chain, navigate to results screen
+  console.log("Start Comparison payload (placeholder):", payload);
+
+  // If you want to simulate navigation later:
+  // window.location.href = "results.html";
 });
-``
+
+// ---------- Optional: dev-only reset helper (keep for future flows) ----------
+window.__compareDebugReset = function () {
+  state.pdfFile = null;
+  state.xmlFile = null;
+  clearZone(pdfZone, pdfStatus, pdfSecondary);
+  clearZone(xmlZone, xmlStatus, xmlSecondary);
+  setMessage("");
+};

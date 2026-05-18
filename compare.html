@@ -1,39 +1,143 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Second Screen</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Compare PDF vs XML</title>
   <link rel="stylesheet" href="compare.css" />
 </head>
+
 <body>
-  <div class="altt-second-bg"></div>
-  <div class="compare-overlay"></div>
+  <!-- Background layer + overlay -->
+  <div class="bg" aria-hidden="true"></div>
+  <div class="overlay" aria-hidden="true"></div>
 
-  <!-- ✅ CONTENT LAYER -->
-  <div class="compare-content">
-    <h1>QA Compare Screen</h1>
+  <main class="shell" role="main">
+    <section class="card" aria-label="Compare PDF vs XML screen">
+      <header class="header">
+        <div class="badge" aria-hidden="true">
+          QA Automation
+        </div>
+        <h1 class="title">Compare PDF vs XML</h1>
+        <p class="subtitle">
+          Upload the printed form output (PDF) and structured data output (XML) to validate consistency before comparison.
+        </p>
+      </header>
 
-    <div class="file-summary">
-      <p>PDF Selected: <span id="pdfName"></span></p>
-      <p>XML Selected: <span id="xmlName"></span></p>
-    </div>
+      <section class="uploads" aria-label="Upload section">
+        <!-- PDF Upload -->
+        <div class="uploadWrap">
+          <div class="uploadLabelRow">
+            <h2 class="uploadTitle">PDF File</h2>
+            <span class="uploadHint" id="pdfHint">Click or drag a file here</span>
+          </div>
 
-    <button onclick="startComparison()">Start Comparison</button>
-  </div>
+          <div
+            class="dropzone"
+            id="pdfZone"
+            role="button"
+            tabindex="0"
+            aria-describedby="pdfHint pdfStatus"
+            aria-label="Upload PDF file"
+            data-kind="pdf"
+          >
+            <input
+              class="fileInput"
+              id="pdfInput"
+              type="file"
+              aria-hidden="true"
+              tabindex="-1"
+            />
 
-  <script>
-    // Load selected file names from previous screen
-    document.getElementById("pdfName").textContent =
-      sessionStorage.getItem("pdfFilename") || "Not selected";
+            <div class="dzInner">
+              <div class="dzIcon" aria-hidden="true">
+                <!-- simple inline icon -->
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6Z" stroke="currentColor" stroke-width="1.6"/>
+                  <path d="M14 2v6h6" stroke="currentColor" stroke-width="1.6"/>
+                  <path d="M8 13h8M8 16h8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+              </div>
 
-    document.getElementById("xmlName").textContent =
-      sessionStorage.getItem("xmlFilename") || "Not selected";
+              <div class="dzText">
+                <div class="dzPrimary" id="pdfPrimary">Upload PDF</div>
+                <div class="dzSecondary" id="pdfSecondary">No file selected</div>
+              </div>
 
-    function startComparison() {
-      alert("Comparison logic will run here");
-    }
-  </script>
+              <div class="dzMeta">
+                <span class="chip">Any file type allowed</span>
+                <span class="chip">Drag & drop supported</span>
+              </div>
+            </div>
+
+            <div class="dzStatus" id="pdfStatus" aria-live="polite"></div>
+          </div>
+        </div>
+
+        <!-- XML Upload -->
+        <div class="uploadWrap">
+          <div class="uploadLabelRow">
+            <h2 class="uploadTitle">XML File</h2>
+            <span class="uploadHint" id="xmlHint">Click or drag a file here</span>
+          </div>
+
+          <div
+            class="dropzone"
+            id="xmlZone"
+            role="button"
+            tabindex="0"
+            aria-describedby="xmlHint xmlStatus"
+            aria-label="Upload XML file"
+            data-kind="xml"
+          >
+            <input
+              class="fileInput"
+              id="xmlInput"
+              type="file"
+              aria-hidden="true"
+              tabindex="-1"
+            />
+
+            <div class="dzInner">
+              <div class="dzIcon" aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                  <path d="M4 4h16v16H4V4Z" stroke="currentColor" stroke-width="1.6"/>
+                  <path d="M8 9 6 12l2 3M16 9l2 3-2 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M10.2 16 13.8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+              </div>
+
+              <div class="dzText">
+                <div class="dzPrimary" id="xmlPrimary">Upload XML</div>
+                <div class="dzSecondary" id="xmlSecondary">No file selected</div>
+              </div>
+
+              <div class="dzMeta">
+                <span class="chip">Any file type allowed</span>
+                <span class="chip">Drag & drop supported</span>
+              </div>
+            </div>
+
+            <div class="dzStatus" id="xmlStatus" aria-live="polite"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="actions" aria-label="Action section">
+        <div class="message" id="message" role="status" aria-live="polite"></div>
+
+        <button class="primaryBtn" id="startBtn" type="button">
+          <span class="btnGlow" aria-hidden="true"></span>
+          Start Comparison
+        </button>
+
+        <p class="footnote">
+          Next step placeholder: this will later connect to the comparison engine (API/AI chain) and navigate to results.
+        </p>
+      </section>
+    </section>
+  </main>
+
+  <script src="compare.js"></script>
 </body>
-``
 </html>
-``

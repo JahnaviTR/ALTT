@@ -69,14 +69,36 @@ body{
 }
 
 /* Main card */
-.card{
+.card {
   width: min(980px, 100%);
-  border: 1px solid var(--panelBorder);
-  background: linear-gradient(180deg, rgba(18,22,34,0.76), rgba(18,22,34,0.62));
-  backdrop-filter: blur(30px);
-  border-radius: var(--radiusXL);
-  box-shadow: var(--shadow);
+  
+  position: relative;   /* ✅ REQUIRED */
+
+  background: rgba(18, 22, 34, 0.35);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 22px;
+
+  box-shadow: 0 20px 55px rgba(0, 0, 0, 0.45);
+
   padding: 26px;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 22px;
+
+  background: radial-gradient(
+    circle at top left,
+    rgba(255, 255, 255, 0.08),
+    transparent 60%
+  );
+
+  pointer-events: none;
 }
 
 .header{

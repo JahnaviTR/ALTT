@@ -319,6 +319,12 @@ body{
   transition: transform var(--transition), filter var(--transition), box-shadow var(--transition);
 }
 
+.primaryBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 .primaryBtn:hover{
   transform: translateY(-1px);
   filter: brightness(1.03);
@@ -362,4 +368,24 @@ body{
 @media (max-width: 460px){
   .card{ padding: 18px; }
   .title{ font-size: 26px; }
+}
+/* ======================
+   Loader / Spinner Styles
+   ====================== */
+
+.loader {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid white;
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  margin-left: 8px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }

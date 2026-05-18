@@ -34,6 +34,7 @@ const pdfStatus = document.getElementById("pdfStatus");
 const xmlStatus = document.getElementById("xmlStatus");
 
 const startBtn = document.getElementById("startBtn");
+startBtn.disabled = true;   // ✅ place immediately after variable declaration
 const messageEl = document.getElementById("message");
 
 // ---------- Helpers ----------
@@ -57,10 +58,11 @@ function setMessage(text, kind = "") {
 
 function setZoneSuccess(zoneEl, statusEl, secondaryEl, file) {
   zoneEl.classList.add("success");
-  const name = file?.name || "Selected file";
-  const size = file?.size ? ` • ${prettySize(file.size)}` : "";
-  secondaryEl.textContent = name;
-  statusEl.textContent = `Uploaded: ${name}${size}`;
+
+  const name = file.name;
+  secondaryEl.innerHTML = `✅ ${name}`;  // ✅ tick added
+
+  statusEl.textContent = `File ready for comparison`;
 }
 
 function clearZone(zoneEl, statusEl, secondaryEl) {
@@ -76,6 +78,15 @@ function assignFile(kind, file) {
   } else if (kind === "xml") {
     state.xmlFile = file;
     setZoneSuccess(xmlZone, xmlStatus, xmlSecondary, file);
+  }
+  updateButtonState();
+}
+
+function updateButtonState() {
+  if (state.pdfFile && state.xmlFile) {
+    startBtn.disabled = false;
+  } else {
+    startBtn.disabled = true;
   }
 }
 
@@ -165,11 +176,25 @@ startBtn.addEventListener("click", () => {
 
   if (missing.length) {
     setMessage(`Please upload the missing file(s): ${missing.join(" and ")}.`, "error");
-    // Optional: guide focus to first missing zone
     if (!state.pdfFile) pdfZone.focus();
     else xmlZone.focus();
     return;
   }
+
+  // ✅ STEP 3 — LOADER STARTS HERE
+  startBtn.disabled = true;
+  startBtn.innerHTML = "Processing <span class='loader'></span>";
+
+  setMessage("Processing files… Please wait.", "success");
+
+  // ✅ Simulate backend processing (later replaced with API)
+  setTimeout(() => {
+
+    // ✅ STEP 4 — NAVIGATION
+    window.location.href = "results.html";
+
+  }, 2000);  // simulate delay
+});
 
   // Placeholder for next step processing / API integration
   setMessage("Files validated. Starting comparison… (placeholder)", "success");
@@ -195,3 +220,5 @@ window.__compareDebugReset = function () {
   clearZone(xmlZone, xmlStatus, xmlSecondary);
   setMessage("");
 };
+
+	

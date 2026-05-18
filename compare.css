@@ -68,17 +68,18 @@ body{
   align-items: center;
   justify-content: center;
 
-  padding: 80px;  /* ✅ This creates equal space all sides */
+  padding: 0;   /* ❌ remove previous padding logic */
 }
 
 /* Main card */
 
 .card {
   
-  width: 100%;
-  max-width: 1400px;  /* ✅ Increase size of box */
+  width: calc(100% - 160px);  /* ✅ creates equal gap on all sides */
+  height: calc(100% - 160px);
 
-  margin: auto;       /* ✅ Center alignment */
+  margin: auto
+
   
   position: relative;   /* ✅ REQUIRED */
 
@@ -86,7 +87,6 @@ body{
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
 
-  padding: 26px;
 }
 
 

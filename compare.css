@@ -1,21 +1,37 @@
 /* =====================================================
-   COMPARE.CSS (IMAGE-BASED BACKGROUND - EXACT MATCH)
+   COMPARE.CSS (VIEWPORT-SAFE BACKGROUND)
 ===================================================== */
 
-body {
+/* Always let the document match the real visible viewport */
+html, body {
   margin: 0;
-  height: 100vh;
-  overflow: hidden;
+  padding: 0;
+  height: 100%;
 }
 
-/* BACKGROUND LAYER */
+/* Use modern viewport units (best for Chrome) with fallback */
+body {
+  min-height: 100vh;     /* fallback */
+  min-height: 100svh;    /* small viewport height */
+  min-height: 100dvh;    /* dynamic viewport height (best) */
+
+  /* Allow page to grow if content grows */
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* BACKGROUND LAYER (fills the visible viewport perfectly) */
 .altt-second-bg {
   position: fixed;
   inset: 0;
   z-index: -2;
 
-  background: url("compare.png") no-repeat center center;
+  background: url("background-viewport-2560x1440.jpg") no-repeat center center;
   background-size: cover;
+  background-attachment: fixed;
+
+  /* Prevent any edge flicker */
+  transform: translateZ(0);
 }
 
 /* LIGHT OVERLAY FOR READABILITY */
@@ -23,6 +39,6 @@ body {
   position: fixed;
   inset: 0;
   z-index: -1;
-
   background: rgba(0, 8, 25, 0.35);
 }
+``

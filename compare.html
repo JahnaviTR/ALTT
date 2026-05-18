@@ -3,57 +3,53 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>ALTT - Upload</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>ALTT - Upload PDF & XML</title>
+
+  <!-- Reuse first screen card + hover glow styling -->
+  <link rel="stylesheet" href="style.css" /> <!-- from your first screen -->
+  <link rel="stylesheet" href="compare.css" />
 </head>
 
-<body>
-  <!-- Background layer only (no text/images here) -->
-  <div class="background" aria-hidden="true"></div>
+<body class="compare-body">
+  <main class="compare-overlay" aria-label="Upload screen">
+    <section class="upload-shell">
+      <div class="upload-grid">
 
-  <!-- Centered stage -->
-  <main class="upload-stage">
-    <section class="upload-grid" aria-label="File upload area">
-      
-      <!-- PDF Upload Card -->
-      <div
-        class="upload-card"
-        id="pdfCard"
-        role="button"
-        tabindex="0"
-        aria-label="Upload PDF file"
-        data-kind="pdf"
-      >
-        <div class="upload-card__shine" aria-hidden="true"></div>
-        <div class="upload-card__content">
-          <div class="upload-title">PDF Upload</div>
-          <div class="upload-hint">Select or drag a PDF file here</div>
-          <div class="upload-filename" id="pdfName">No file selected</div>
+        <!-- PDF Upload -->
+        <div class="option-card upload-card" id="pdfCard" role="button" tabindex="0" aria-label="Upload PDF file">
+          <span class="option-card__shine" aria-hidden="true"></span>
+          <div class="upload-card__content">
+            <h3 class="option-card__title">Upload PDF</h3>
+            <p class="option-card__desc">Select or drag a PDF file here</p>
+
+            <input type="file" id="pdfInput" accept=".pdf,application/pdf" hidden />
+            <div class="file-pill" id="pdfPill" aria-live="polite">No file selected</div>
+          </div>
         </div>
-        <input type="file" id="pdfInput" accept=".pdf,application/pdf" hidden />
+
+        <!-- XML Upload -->
+        <div class="option-card upload-card" id="xmlCard" role="button" tabindex="0" aria-label="Upload XML file">
+          <span class="option-card__shine" aria-hidden="true"></span>
+          <div class="upload-card__content">
+            <h3 class="option-card__title">Upload XML</h3>
+            <p class="option-card__desc">Select or drag an XML file here</p>
+
+            <input type="file" id="xmlInput" accept=".xml,text/xml,application/xml" hidden />
+            <div class="file-pill" id="xmlPill" aria-live="polite">No file selected</div>
+          </div>
+        </div>
+
       </div>
 
-      <!-- XML Upload Card -->
-      <div
-        class="upload-card"
-        id="xmlCard"
-        role="button"
-        tabindex="0"
-        aria-label="Upload XML file"
-        data-kind="xml"
-      >
-        <div class="upload-card__shine" aria-hidden="true"></div>
-        <div class="upload-card__content">
-          <div class="upload-title">XML Upload</div>
-          <div class="upload-hint">Select or drag an XML file here</div>
-          <div class="upload-filename" id="xmlName">No file selected</div>
-        </div>
-        <input type="file" id="xmlInput" accept=".xml,text/xml,application/xml" hidden />
+      <div class="actions">
+        <button class="continue-btn" id="continueBtn" disabled>
+          Continue
+        </button>
       </div>
-
     </section>
   </main>
 
   <script src="compare.js"></script>
 </body>
 </html>
+``

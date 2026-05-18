@@ -1,0 +1,119 @@
+/* =========================
+   Exact background replica
+   ========================= */
+.compare-body {
+  margin: 0;
+  height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+
+  /* EXACT replica: use provided image */
+  background: url("image.png") no-repeat center center;
+  background-size: cover;
+}
+
+/* Readability overlay (subtle) */
+.compare-overlay {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 8, 22, 0.35);
+}
+
+/* Layout shell */
+.upload-shell {
+  width: min(1100px, 92vw);
+  padding: clamp(18px, 3vw, 34px);
+}
+
+/* Two cards grid */
+.upload-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(14px, 2.2vw, 22px);
+  align-items: stretch;
+}
+
+/* Responsive: stack on smaller screens */
+@media (max-width: 900px) {
+  .upload-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================
+   Reuse first-screen option-card
+   but make it perfect for uploads
+   ========================= */
+.upload-card.option-card {
+  /* Keep option-card visuals from style.css,
+     only add structural safety here */
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 520px;
+  min-width: 0;
+  margin: 0 auto;
+}
+
+.upload-card__content {
+  width: 100%;
+  display: grid;
+  gap: 10px;
+  text-align: center;
+}
+
+/* Drag state */
+.upload-card.is-dragover {
+  outline: 2px solid rgba(120, 210, 255, 0.55);
+  outline-offset: 4px;
+}
+
+/* File pill */
+.file-pill {
+  margin-top: 6px;
+  padding: 10px 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.14);
+  color: rgba(235, 248, 255, 0.92);
+  font-size: 13px;
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Selected state */
+.file-pill.has-file {
+  border-color: rgba(170, 240, 255, 0.35);
+  box-shadow: 0 0 18px rgba(90, 180, 255, 0.25);
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 18px;
+}
+
+.continue-btn {
+  padding: 12px 22px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.08);
+  color: rgba(235, 248, 255, 0.96);
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: 0.25s ease;
+}
+
+.continue-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.continue-btn:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 18px rgba(90, 180, 255, 0.35);
+  border-color: rgba(200, 240, 255, 0.30);
+}
